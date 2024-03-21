@@ -1,5 +1,6 @@
 package com.example.tasksign01
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -14,6 +15,10 @@ class SignInActivity : AppCompatActivity() {
         val idEditText = findViewById<EditText>(R.id.et_ID)
         val pwEditText = findViewById<EditText>(R.id.et_PW)
 
+
+        val id : String = idEditText.text.toString()
+        val pw : String = pwEditText.text.toString()
+
         val loginButton = findViewById<Button>(R.id.btn_login)
         loginButton.setOnClickListener {
             if(idEditText.text.isEmpty()){
@@ -25,13 +30,12 @@ class SignInActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else{
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                val Intent
+                val loginIntent = Intent(this, HomeActivity::class.java)
+                loginIntent.putExtra("userID", id)
+                startActivity(loginIntent)
             }
         }
 
-        val id : String = idEditText.text.toString()
-        val pw : String = pwEditText.text.toString()
 
         }
     }
-}
