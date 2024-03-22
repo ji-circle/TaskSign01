@@ -8,6 +8,199 @@
     tools:context=".SignUpActivity"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/mainImage"
+        android:layout_width="201dp"
+        android:layout_height="140dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+
+        android:src="@drawable/join01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_makeAccount"
+        app:layout_constraintTop_toBottomOf="@+id/mainImage">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tv_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="305dp"
+                android:text="이름"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/et_userName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:hint="이름을 입력하세요."
+                app:layout_constraintTop_toBottomOf="@+id/tv_userName" />
+
+            <TextView
+                android:id="@+id/tv_userID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="286dp"
+                android:text="아이디"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_userName" />
+
+            <EditText
+                android:id="@+id/et_userID"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="130dp"
+                android:hint="아이디를 입력하세요."
+                android:inputType="textPassword"
+                app:layout_constraintTop_toBottomOf="@+id/tv_userID" />
+
+            <Button
+                android:id="@+id/btn_checkID"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:text="중복확인"
+                android:textSize="10sp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/et_userID"
+                app:layout_constraintStart_toEndOf="@+id/et_userID"
+                app:layout_constraintTop_toTopOf="@+id/et_userID" />
+
+            <TextView
+                android:id="@+id/tv_userPW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="286dp"
+                android:text="비밀번호"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_userID" />
+
+            <EditText
+                android:id="@+id/et_userPW"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:hint="비밀번호를 입력하세요."
+                android:inputType="textPassword"
+                app:layout_constraintTop_toBottomOf="@+id/tv_userPW" />
+
+            <EditText
+                android:id="@+id/et_checkUserPW"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:hint="비밀번호를 다시 입력하세요."
+                android:inputType="textPassword"
+                app:layout_constraintTop_toBottomOf="@+id/et_userPW" />
+
+            <TextView
+                android:id="@+id/tv_userAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="286dp"
+                android:text="나이"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_checkUserPW" />
+
+            <EditText
+                android:id="@+id/et_userAge"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:hint="나이를 입력하세요."
+                android:inputType="number"
+                app:layout_constraintTop_toBottomOf="@+id/tv_userAge" />
+
+
+            <TextView
+                android:id="@+id/tv_userMBTI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="286dp"
+                android:text="MBTI"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_userAge" />
+
+            <EditText
+                android:id="@+id/et_userMBTI"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:hint="MBTI를 입력하세요"
+                android:inputType="textCapCharacters"
+                app:layout_constraintTop_toBottomOf="@+id/tv_userMBTI" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+    <Button
+        android:id="@+id/btn_makeAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="50dp"
+        android:text="회원가입"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
