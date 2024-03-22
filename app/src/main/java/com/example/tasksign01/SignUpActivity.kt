@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlin.time.Duration.Companion.microseconds
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -35,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         var newID : String = userIDInput.text.toString()
         var newPW : String = userPWInput.text.toString()
         var checkPW : String = userPWcheck.text.toString()
-        var newAge : String = userAgeInput.text.toString()
+        var newAge : Int = userAgeInput.text.toString().toInt()
         var newMBTI : String = userMBTIInput.toString()
 
         checkIDButton.setOnClickListener {
@@ -51,10 +52,10 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-
+        var isAgeEmpty = newAge == null
 
         createAccountButton.setOnClickListener {
-            if(newName.isEmpty() || newID.isEmpty() || newPW.isEmpty() || checkPW.isEmpty()|| newAge.isEmpty() || newMBTI.isEmpty()){
+            if(newName.isEmpty() || newID.isEmpty() || newPW.isEmpty() || checkPW.isEmpty()|| isAgeEmpty|| newMBTI.isEmpty()){
                 Toast.makeText(this,"입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
             }else if ( newPW!=checkPW ){
                 Toast.makeText(this,"비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
@@ -66,11 +67,13 @@ class SignUpActivity : AppCompatActivity() {
                 val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI")
                 userInfoList.add(userInfo)
 
-                val returnSIintent = Intent(this,SignInActivity::class.java)
-                for(i in 0..userInfoList.size-1){
-                    returnSIintent.putExtra("userInfo $i ", userInfoList[i])
-                }
-                returnSIintent.putExtra("listSize",userInfoList.size)
+                Toast.makeText(this,"$userInfo",Toast.LENGTH_SHORT).show()
+//
+//                val returnSIintent = Intent(this,SignInActivity::class.java)
+//                for(i in 0..userInfoList.size-1){
+//                    returnSIintent.putExtra("userInfo $i ", userInfoList[i])
+//                }
+//                returnSIintent.putExtra("listSize",userInfoList.size)
                 finish()
             }
         }
