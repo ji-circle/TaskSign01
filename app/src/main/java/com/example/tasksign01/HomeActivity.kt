@@ -18,7 +18,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         val tempReceive = intent.getStringExtra("userInfo")?.split(", ")?: emptyList()
-        var receivedUserInfoList = tempReceive
 
         val viewName = findViewById<TextView>(R.id.tv_thisName)
         val viewID = findViewById<TextView>(R.id.tv_thisID)
@@ -49,7 +48,6 @@ class HomeActivity : AppCompatActivity() {
         btn_homefinish.setOnClickListener{
             finish()
         }
-
 
     }
 }
