@@ -39,6 +39,7 @@ class SignUpActivity : AppCompatActivity() {
         var userPWcheck = findViewById<EditText>(R.id.et_checkUserPW)
         var userAgeInput = findViewById<EditText>(R.id.et_userAge)
         var userMBTIInput = findViewById<EditText>(R.id.et_userMBTI)
+        var userEmailInput = findViewById<EditText>(R.id.et_userEmail)
 
         val createAccountButton = findViewById<Button>(R.id.btn_makeAccount)
         val checkIDButton = findViewById<Button>(R.id.btn_checkID)
@@ -78,6 +79,7 @@ class SignUpActivity : AppCompatActivity() {
             var checkPW = userPWcheck.text.toString()
             var newAge = userAgeInput.text.toString()
             var newMBTI = userMBTIInput.text.toString()
+            var newEmail = userEmailInput.text.toString()
 
             if(newName.isEmpty()){
                 Toast.makeText(this,"입력되지 않은 정보(이름)가 있습니다", Toast.LENGTH_SHORT).show()}
@@ -95,13 +97,18 @@ class SignUpActivity : AppCompatActivity() {
 
             if (newPW!=checkPW){
                 Toast.makeText(this,"비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-            } else if(!isIDOk){     //아이디 중복인데 무시하고 회원가입 누른 경우
+            }else if(!isSafePW(newPW)){
+                Toast.makeText(this,"$newPW",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"비밀번호가 강력하지 않습니다.", Toast.LENGTH_SHORT).show()
+            }else if(!isIDOk){     //아이디 중복인데 무시하고 회원가입 누른 경우
                 Toast.makeText(this, "ID 중복확인을 해주세요.", Toast.LENGTH_SHORT).show()
             } else if (newMBTI.length!=4){
                 Toast.makeText(this,"MBTI가 잘못 입력되었습니다.", Toast.LENGTH_SHORT).show()
+            }else if(!newEmail.contains('@')){
+                Toast.makeText(this,"이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
             }else{
 
-                val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI")
+                val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI, $newEmail")
 
 //
                 //val numAge : Int = newAge.toInt()
@@ -113,6 +120,7 @@ class SignUpActivity : AppCompatActivity() {
                 objUserInfo["pw"] = newPW
                 objUserInfo["age"] = newAge
                 objUserInfo["mbti"] = newMBTI
+                objUserInfo["email"] = newEmail
                 //object에 추가하기
                 UserDataList.userDataList.add(objUserInfo)
 
@@ -125,5 +133,15 @@ class SignUpActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+    fun isSafePW(password: String):Boolean{
+        val upperCase = Regex("[A-Z]]")
+        val textSymbol = Regex("[^A-Za-z0-9]")
+
+        val isUpperExist = upperCase.containsMatchIn(password)
+        val isSymbolExist = textSymbol.containsMatchIn(password)
+        val isLengthOK = password.length >= 8
+
+        return isUpperExist&&isSymbolExist&&isLengthOK
     }
 }

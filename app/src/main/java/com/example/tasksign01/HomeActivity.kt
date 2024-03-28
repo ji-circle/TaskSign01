@@ -24,6 +24,8 @@ class HomeActivity : AppCompatActivity() {
         val viewPW = findViewById<TextView>(R.id.tv_thisPW)
         val viewAge = findViewById<TextView>(R.id.tv_thisAge)
         val viewMBTI = findViewById<TextView>(R.id.tv_thisMBTI)
+        val viewEmail = findViewById<TextView>(R.id.tv_thisEmail)
+
         val imageHome = findViewById<ImageView>(R.id.homeImage)
 
         viewName.setText(tempReceive[0].toString())
@@ -31,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
         viewPW.setText(tempReceive[2].toString())
         viewAge.setText(tempReceive[3].toString())
         viewMBTI.setText(tempReceive[4].toString())
+        viewEmail.setText(tempReceive[5].toString())
 
         val random = Random
         val num = random.nextInt(5)+1
