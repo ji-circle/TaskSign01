@@ -1,61 +1,82 @@
 package com.example.tasksign01
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 
+object UserDataList{
+    var userDataList = mutableListOf<Map<String, String>>()
+}
 class SignInActivity : AppCompatActivity() {
+
+
+    lateinit var idEditText : EditText
+    lateinit var pwEditText : EditText
+
+    var oneList : List<String> = emptyList()
+    var infoFromUp : ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode == Activity.RESULT_OK) {
+            oneList = it.data?.getStringExtra("userInfo")?.split(", ") ?: emptyList()
+            Toast.makeText(this, "받은 reg : $oneList", Toast.LENGTH_SHORT).show()
+        }else{
+            oneList = emptyList()
+        }
+
+        Toast.makeText(this, "전체 reg : ${UserDataList.userDataList}", Toast.LENGTH_SHORT).show()
+
+        if(oneList.isNotEmpty()){
+            Toast.makeText(this,"${oneList[1]} 아이디 ${oneList[2]}", Toast.LENGTH_SHORT).show()
+            idEditText.setText(oneList[1])
+            pwEditText.setText(oneList[2])
+        }else{
+
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        var receivedInfoList = mutableListOf<List<String>>()
-//        var receivedInfoList = mutableListOf<String>()
+        idEditText = findViewById<EditText>(R.id.et_ID)
+        pwEditText = findViewById<EditText>(R.id.et_PW)
 
-        val idEditText = findViewById<EditText>(R.id.et_ID)
-        val pwEditText = findViewById<EditText>(R.id.et_PW)
-
-        var id = idEditText.text.toString()
-        var pw = pwEditText.text.toString()
-
-        //var j = 0
-
-        val tempReceive= intent.getStringExtra("userInfo")?.split(", ")?:0
-        if(tempReceive !is Int) {
-            receivedInfoList.add(tempReceive as List<String>)
-        }
-        //var receivedSize = intent.getIntExtra("listSize", 0)
-        //for(i in 0..receivedSize-1){
-//            val tempReceive = intent.getStringExtra("userInfo")?.split(", ")?:emptyList()
-//            receivedInfoList.add(tempReceive)
-//            val tempReceive = intent.getStringExtra("userInfo $i ")?.split(", ")?: emptyList()
-//            receivedInfoList.add(tempReceive)
-        //}
 
         val loginButton = findViewById<Button>(R.id.btn_login)
         loginButton.setOnClickListener {
 
-            Toast.makeText(this,"받은 리스트 ${receivedInfoList}", Toast.LENGTH_SHORT).show()
 
+            Toast.makeText(this, "${oneList.isNotEmpty()} onelist notempty?", Toast.LENGTH_SHORT).show()
+
+        //자동완성될 정보 없고 빈칸으로 로그인 눌렀을 때
             if(idEditText.text.isEmpty()){
                 Toast.makeText(this, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
             }
             if(pwEditText.text.isEmpty()){
                 Toast.makeText(this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
             }
+
             if(!idEditText.text.isEmpty()&&!pwEditText.text.isEmpty()){
-                for(j in 0..receivedInfoList.size-1){
-                    id = idEditText.text.toString()
-                    pw = pwEditText.text.toString()
-                    if(receivedInfoList[j][1] == id){
-                        if(receivedInfoList[j][2] == pw){
+                var objIndex = 0
+                var id = idEditText.text.toString()
+                var pw = pwEditText.text.toString()
+
+                UserDataList.userDataList.forEach{ user->
+                    val objID = user["id"]
+                    val objPW = user["pw"]
+
+                    Toast.makeText(this, "$objID , $objPW , ${objID==id} , ${objPW == pw}", Toast.LENGTH_SHORT).show()
+
+                    if(objID == id){
+                        if(objPW == pw){
                             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                            val thisUser = receivedInfoList[j].toString()
+                            val thisUser = UserDataList.userDataList[objIndex].values.joinToString(", ")
                             val loginIntent = Intent(this, HomeActivity::class.java)
                             loginIntent.putExtra("userInfo", thisUser)
                             Toast.makeText(this, "sent : ${thisUser}", Toast.LENGTH_SHORT).show()
@@ -66,33 +87,29 @@ class SignInActivity : AppCompatActivity() {
                     }else{
                         Toast.makeText(this,"아이디를 확인해 주세요.", Toast.LENGTH_SHORT).show()
                     }
+
+                    objIndex += 1
                 }
-
-
-
             }
         }
+
+
+        val signupIntent = Intent(this, SignUpActivity::class.java)
+
         val signupButton = findViewById<Button>(R.id.btn_signup)
         signupButton.setOnClickListener {
-            val signupIntent = Intent(this, SignUpActivity::class.java)
-            //signupIntent.putExtra("userInfoList", receivedInfoList)
-            if(receivedInfoList.size>=1) {
-                for (i in 0..receivedInfoList.size - 1) {
-                    signupIntent.putExtra("userInfo $i ", receivedInfoList[i].toString())
-                }
 
-                // 여기까지
+
+
+            if(oneList.isNotEmpty()){   //처음이 아니라면
+
+                val idList = UserDataList.userDataList.flatMap { it["id"]?.split(",")?: emptyList() }
+                signupIntent.putExtra("userIDList", idList.toString().replace("[","").replace("]",""))
+
             }
-            if(tempReceive !is Int){
-                signupIntent.putExtra("listSize", receivedInfoList.size)
-            }else {
-                signupIntent.putExtra("listSize", 0)
-            }
+            signupIntent.putExtra("listSize", oneList.size)
 
-
-            startActivity(signupIntent)
+            infoFromUp.launch(signupIntent)
         }
-
-
     }
 }
