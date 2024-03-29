@@ -35,16 +35,14 @@ class HomeActivity : AppCompatActivity() {
         viewMBTI.setText(tempReceive[4].toString())
         viewEmail.setText(tempReceive[5].toString())
 
-        val random = Random
-        val num = random.nextInt(5)+1
-
-        when(num){
+//        val random = Random
+//        val num = random.nextInt(5)+1
+        val num = when((1..5).random()){
             1->imageHome.setImageResource(R.drawable.home01)
             2->imageHome.setImageResource(R.drawable.home02)
             3->imageHome.setImageResource(R.drawable.home03)
             4->imageHome.setImageResource(R.drawable.home04)
-            5->imageHome.setImageResource(R.drawable.home05)
-
+            else->imageHome.setImageResource(R.drawable.home05)
         }
 
         val btn_homefinish = findViewById<Button>(R.id.btn_finish)

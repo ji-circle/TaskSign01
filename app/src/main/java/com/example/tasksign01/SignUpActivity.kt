@@ -122,7 +122,9 @@ class SignUpActivity : AppCompatActivity() {
                 val returnSIintent = Intent(this,SignInActivity::class.java)
                 returnSIintent.putExtra("userInfo", userInfo)
                 setResult(RESULT_OK, returnSIintent)
-                finish()
+
+                if(!isFinishing)
+                    finish()
             }
         }
     }
