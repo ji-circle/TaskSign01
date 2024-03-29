@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="305dp"
-                android:text="이름"
+                android:text="@string/signup_name_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -59,7 +59,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="이름을 입력하세요."
+                android:hint="@string/signup_name_input"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userName" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="286dp"
-                android:text="아이디"
+                android:text="@string/signup_id_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,16 +82,16 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="130dp"
-                android:hint="아이디를 입력하세요."
+                android:hint="@string/signup_id_input"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userID" />
 
             <Button
                 android:id="@+id/btn_checkID"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:text="중복확인"
-                android:textSize="10sp"
+                android:layout_marginStart="5dp"
+                android:text="@string/signup_btn_idcheck"
+                android:textSize="11sp"
 
                 app:layout_constraintBottom_toBottomOf="@+id/et_userID"
                 app:layout_constraintStart_toEndOf="@+id/et_userID"
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="286dp"
-                android:text="비밀번호"
+                android:text="@string/signup_pw_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="비밀번호를 입력하세요."
+                android:hint="@string/signup_pw_input1"
                 android:inputType="textPassword"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userPW" />
 
@@ -126,7 +126,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="비밀번호를 다시 입력하세요."
+                android:hint="@string/signup_pw_input2"
                 android:inputType="textPassword"
                 app:layout_constraintTop_toBottomOf="@+id/et_userPW" />
 
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="286dp"
-                android:text="나이"
+                android:text="@string/signup_age_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +150,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="나이를 입력하세요."
+                android:hint="@string/signup_age_input"
                 android:inputType="number"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userAge" />
 
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="286dp"
-                android:text="MBTI"
+                android:text="@string/signup_mbti_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +175,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="MBTI를 입력하세요"
+                android:hint="@string/signup_mbti_input"
                 android:inputType="textCapCharacters"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userMBTI" />
 
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="286dp"
-                android:text="Email"
+                android:text="@string/signup_email_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -200,7 +200,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="이메일을 입력하세요"
+                android:hint="@string/signup_email_input"
                 android:inputType="textEmailAddress"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userEmail" />
 
@@ -219,7 +219,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginBottom="33dp"
         android:layout_marginEnd="50dp"
-        android:text="회원가입"
+        android:text="@string/signup_btn_join"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -23,18 +23,13 @@ class SignInActivity : AppCompatActivity() {
     var infoFromUp : ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == Activity.RESULT_OK) {
             oneList = it.data?.getStringExtra("userInfo")?.split(", ") ?: emptyList()
-            //Toast.makeText(this, "받은 reg : $oneList", Toast.LENGTH_SHORT).show()
-        }else{
-            oneList = emptyList()
-        }
-        //Toast.makeText(this, "전체 reg : ${UserDataList.userDataList}", Toast.LENGTH_SHORT).show()
-
-        //회원가입 한 적이 있다면, 직전에 입력한 정보를 자동입력
-        if(oneList.isNotEmpty()){
-            //Toast.makeText(this,"${oneList[1]} 아이디 ${oneList[2]}", Toast.LENGTH_SHORT).show()
+            //회원가입 한 적이 있다면, 직전에 입력한 정보를 자동입력
             idEditText.setText(oneList[1])
             pwEditText.setText(oneList[2])
-        }else{}
+            //Toast.makeText(this, "받은 reg : $oneList", Toast.LENGTH_SHORT).show()
+        }else{
+        }
+        //Toast.makeText(this, "전체 reg : ${UserDataList.userDataList}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +42,7 @@ class SignInActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.btn_login)
         loginButton.setOnClickListener {
 
-            //Toast.makeText(this, "${oneList.isNotEmpty()} onelist notempty?", Toast.LENGTH_SHORT).show()
-
-            //자동완성될 정보 없고 빈칸으로 로그인 눌렀을 때
+            //자동완성될 정보 없고 빈칸으로 로그인 눌렀을 때. 앞뒤공백 제거하려면 .trim().isEmpty()
             if(idEditText.text.isEmpty()){
                 Toast.makeText(this, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show()
             }
@@ -67,34 +60,28 @@ class SignInActivity : AppCompatActivity() {
                     val objID = user["id"]
                     val objPW = user["pw"]
 
-                    //Toast.makeText(this, "$objID , $objPW , ${objID==id} , ${objPW == pw}", Toast.LENGTH_SHORT).show()
-
                     if(objID == id){
                         if(objPW == pw){
-                            isMatched += 2
-                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                            isMatched = 2
+                            //kt에서 string 쓸 때... getString(R.string.으로 가져옴)
+                            Toast.makeText(this, getString(R.string.kt_isLoginOk), Toast.LENGTH_SHORT).show()
                             val thisUser = UserDataList.userDataList[objIndex].values.joinToString(", ")
                             val loginIntent = Intent(this, HomeActivity::class.java)
                             loginIntent.putExtra("userInfo", thisUser)
                             //Toast.makeText(this, "sent : ${thisUser}", Toast.LENGTH_SHORT).show()
                             startActivity(loginIntent)
-                        }else{
-                        }
+                            //return@setOnClickListener
+                        }else{                         }
                     }else{
                     }
                     //몇 번째 사람의 정보인지 확인하려고... 인덱스 어떻게 받지ㅠ
                     objIndex += 1
                 }
-                //when(isMatched){
-                //    0 -> Toast.makeText(this,"아이디/비밀번호를 확인해 주세요.", Toast.LENGTH_SHORT).show()
-                    //2 -> Toast.makeText(this, "ISMATCHED 로그인 성공", Toast.LENGTH_SHORT).show()
-                //}
-                if(isMatched == 0){
-                    Toast.makeText(this,"아이디/비밀번호를 확인해 주세요.", Toast.LENGTH_SHORT).show()
+                if(isMatched == 0) {
+                    Toast.makeText(this, "아이디/비밀번호를 확인해 주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
         val signupIntent = Intent(this, SignUpActivity::class.java)
 
         val signupButton = findViewById<Button>(R.id.btn_signup)

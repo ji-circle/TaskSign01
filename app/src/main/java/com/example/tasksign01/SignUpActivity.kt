@@ -26,11 +26,9 @@ class SignUpActivity : AppCompatActivity() {
         if(gotListSize!=0) {
             userIdList = intent.getStringExtra("userIDList")?.split(", ") ?: emptyList()
         }else{
-
         }
 
 //        Toast.makeText(this, "리스트 전체 : ${userIdList} , 개수는 ${gotListSize}", Toast.LENGTH_LONG).show()
-
         var isIDOk = false
 
         var userNameInput = findViewById<EditText>(R.id.et_userName)
@@ -94,12 +92,11 @@ class SignUpActivity : AppCompatActivity() {
             if(newMBTI.isEmpty()){
                 Toast.makeText(this,"입력되지 않은 정보(MBTI)가 있습니다", Toast.LENGTH_SHORT).show()}
 
-
             if (newPW!=checkPW){
                 Toast.makeText(this,"비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-            }else if(!isSafePW(newPW)){
-                Toast.makeText(this,"$newPW",Toast.LENGTH_SHORT).show()
-                Toast.makeText(this,"비밀번호가 강력하지 않습니다.", Toast.LENGTH_SHORT).show()
+            //}else if(!isSafePW(newPW)){
+            //    Toast.makeText(this,"지금 비밀번호 : $newPW",Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(this,"비밀번호가 강력하지 않습니다.", Toast.LENGTH_SHORT).show()
             }else if(!isIDOk){     //아이디 중복인데 무시하고 회원가입 누른 경우
                 Toast.makeText(this, "ID 중복확인을 해주세요.", Toast.LENGTH_SHORT).show()
             } else if (newMBTI.length!=4){
@@ -107,13 +104,8 @@ class SignUpActivity : AppCompatActivity() {
             }else if(!newEmail.contains('@')){
                 Toast.makeText(this,"이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
             }else{
-
                 val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI, $newEmail")
 
-//
-                //val numAge : Int = newAge.toInt()
-                //val userInfo = ("$newName, $newID, $newPW, $numAge, $newMBTI")
-//
                 val objUserInfo: MutableMap<String, String> = mutableMapOf()
                 objUserInfo["name"] = newName
                 objUserInfo["id"] = newID
@@ -138,9 +130,10 @@ class SignUpActivity : AppCompatActivity() {
         val upperCase = Regex("[A-Z]]")
         val textSymbol = Regex("[^A-Za-z0-9]")
 
-        val isUpperExist = upperCase.containsMatchIn(password)
-        val isSymbolExist = textSymbol.containsMatchIn(password)
-        val isLengthOK = password.length >= 8
+
+        val isUpperExist = password.contains(upperCase)
+        val isSymbolExist = password.contains(textSymbol)
+        val isLengthOK = password.length >= 4
 
         return isUpperExist&&isSymbolExist&&isLengthOK
     }
