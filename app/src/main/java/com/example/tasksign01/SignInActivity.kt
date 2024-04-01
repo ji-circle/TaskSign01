@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 //회원가입한 정보들을 공유...
 object UserDataList{
-    var userDataList = mutableListOf<Map<String, String>>()
+    var userDataList = mutableListOf<Map<String,String>>()
+    //var userDataList = mutableListOf<User>
 }
 class SignInActivity : AppCompatActivity() {
 

@@ -9,10 +9,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import kotlin.time.Duration.Companion.microseconds
 
 class SignUpActivity : AppCompatActivity() {
 
+    private val viewModel: SignUpViewModel by lazy {
+        ViewModelProvider(this)[SignUpViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +27,11 @@ class SignUpActivity : AppCompatActivity() {
 
         //이전에 회원가입 했다면 listSize가 0이 아님
         var gotListSize = intent.getIntExtra("listSize", 0)
-        if(gotListSize!=0) {
+        if (gotListSize != 0) {
             userIdList = intent.getStringExtra("userIDList")?.split(", ") ?: emptyList()
-        }else{
+        } else {
         }
 
-//        Toast.makeText(this, "리스트 전체 : ${userIdList} , 개수는 ${gotListSize}", Toast.LENGTH_LONG).show()
         var isIDOk = false
 
         var userNameInput = findViewById<EditText>(R.id.et_userName)
@@ -47,96 +50,50 @@ class SignUpActivity : AppCompatActivity() {
         checkIDButton.setOnClickListener {
             newID = userIDInput.text.toString()
             //기존 회원의 수가 0이 아니라면 gitListSize가 0보다 큼
-            if(gotListSize>0){
-                for(k in 0..gotListSize-1){
-                    if(userIdList.contains(newID)){
+            if (gotListSize > 0) {
+                for (k in 0..gotListSize - 1) {
+                    if (userIdList.contains(newID)) {
                         isIDOk = false
-                        //Toast.makeText(this,"다른 사람과 중복된 아이디입니다.", Toast.LENGTH_SHORT).show()
                         break
-                    }else{
+                    } else {
                         isIDOk = true
                         continue
                     }
                 }
-            }else{
+            } else {
                 isIDOk = true
             }
-
-            if(isIDOk){
-                Toast.makeText(this,"사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this,"중복된 아이디입니다.", Toast.LENGTH_SHORT).show()
-            }
+            viewModel.checkID(isIDOk)
         }
 
         createAccountButton.setOnClickListener {
-
             var newName = userNameInput.text.toString()
-            //var newID = userIDInput.text.toString()
             var newPW = userPWInput.text.toString()
             var checkPW = userPWcheck.text.toString()
             var newAge = userAgeInput.text.toString()
             var newMBTI = userMBTIInput.text.toString()
             var newEmail = userEmailInput.text.toString()
 
-            if(newName.isEmpty()){
-                Toast.makeText(this,"입력되지 않은 정보(이름)가 있습니다", Toast.LENGTH_SHORT).show()}
-            if(newID.isEmpty()){
-                Toast.makeText(this,"알맞지 않은 정보(아이디)가 있습니다", Toast.LENGTH_SHORT).show()}
-            if(newPW.isEmpty()){
-                Toast.makeText(this,"입력되지 않은 정보(비밀번호)가 있습니다", Toast.LENGTH_SHORT).show()}
-            if(checkPW.isEmpty()){
-                Toast.makeText(this,"입력되지 않은 정보(비밀번호 확인)가 있습니다", Toast.LENGTH_SHORT).show()}
-            if(newAge.isEmpty()){
-                Toast.makeText(this,"입력되지 않은 정보(나이)가 있습니다", Toast.LENGTH_SHORT).show()}
-            if(newMBTI.isEmpty()){
-                Toast.makeText(this,"입력되지 않은 정보(MBTI)가 있습니다", Toast.LENGTH_SHORT).show()}
+            viewModel.register(newName, newID, newPW, checkPW, newAge, newMBTI, newEmail)
 
-            if (newPW!=checkPW){
-                Toast.makeText(this,"비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-            //}else if(!isSafePW(newPW)){
-            //    Toast.makeText(this,"지금 비밀번호 : $newPW",Toast.LENGTH_SHORT).show()
-            //    Toast.makeText(this,"비밀번호가 강력하지 않습니다.", Toast.LENGTH_SHORT).show()
-            }else if(!isIDOk){     //아이디 중복인데 무시하고 회원가입 누른 경우
-                Toast.makeText(this, "ID 중복확인을 해주세요.", Toast.LENGTH_SHORT).show()
-            } else if (newMBTI.length!=4){
-                Toast.makeText(this,"MBTI가 잘못 입력되었습니다.", Toast.LENGTH_SHORT).show()
-            }else if(!newEmail.contains('@')){
-                Toast.makeText(this,"이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
-            }else{
-                val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI, $newEmail")
+            val userInfo = ("$newName, $newID, $newPW, $newAge, $newMBTI, $newEmail")
 
-                val objUserInfo: MutableMap<String, String> = mutableMapOf()
-                objUserInfo["name"] = newName
-                objUserInfo["id"] = newID
-                objUserInfo["pw"] = newPW
-                objUserInfo["age"] = newAge
-                objUserInfo["mbti"] = newMBTI
-                objUserInfo["email"] = newEmail
-                //object에 추가하기
-                UserDataList.userDataList.add(objUserInfo)
+            val returnSIintent = Intent(this, SignInActivity::class.java)
+            returnSIintent.putExtra("userInfo", userInfo)
+            setResult(RESULT_OK, returnSIintent)
 
-                //Toast.makeText(this,"입력값 : $userInfo",Toast.LENGTH_SHORT).show()
-                //Toast.makeText(this,"obj 입력값 : $objUserInfo",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "$newName, $newID, $newPW", Toast.LENGTH_SHORT).show()
 
-                val returnSIintent = Intent(this,SignInActivity::class.java)
-                returnSIintent.putExtra("userInfo", userInfo)
-                setResult(RESULT_OK, returnSIintent)
-
-                if(!isFinishing)
-                    finish()
-            }
+            if (!isFinishing)
+                finish()
         }
-    }
-    fun isSafePW(password: String):Boolean{
-        val upperCase = Regex("[A-Z]]")
-        val textSymbol = Regex("[^A-Za-z0-9]")
-
-
-        val isUpperExist = password.contains(upperCase)
-        val isSymbolExist = password.contains(textSymbol)
-        val isLengthOK = password.length >= 4
-
-        return isUpperExist&&isSymbolExist&&isLengthOK
+        viewModel.correctMsg.observe(this){
+            if(!it.isNullOrBlank())
+                Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        }
+        viewModel.errorMsg.observe(this) {
+            if (!it.isNullOrBlank())
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
     }
 }
